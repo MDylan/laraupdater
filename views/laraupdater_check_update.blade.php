@@ -23,12 +23,12 @@
     $(document).ready(function() {
         $.ajax({
             type: 'GET',
-            url: 'updater.check',
+            url: '{{ route("laraupdater.check") }}',
             async: false,
             success: function(response) {
+                {{-- check() returns the version as a plain STRING, not an object. --}}
                 if(response != ''){
-                    $('#update_notification').append('<strong>{{trans("laraupdater.Update_Available")}} <span class="badge badge-pill badge-info">v.'+response['version']+'</span></strong> <a role="button"  onclick="update()"  class="btn btn-sm btn-info pull-right update-btn">{{trans("laraupdater.Update_Now")}}</a>');
-                    $('#update_notification').append('<br ><strong>{{trans("laraupdater.CHANGELOG")}} : '+response['description']+'</strong> '); // Display change log in notification
+                    $('#update_notification').append('<strong>{{trans("laraupdater.Update_Available")}} <span class="badge badge-pill badge-info">v.'+response+'</span></strong> <a role="button"  onclick="update()"  class="btn btn-sm btn-info pull-right update-btn">{{trans("laraupdater.Update_Now")}}</a>');
                     $('#update_notification').show();
                 }
             }
@@ -40,7 +40,7 @@
         $(".update-btn").html('{{trans("laraupdater.Updating")}}');
         $.ajax({
             type: 'GET',
-            url: 'updater.update',
+            url: '{{ route("laraupdater.update") }}',
             success: function(response) {
 
                 if(response != ''){
